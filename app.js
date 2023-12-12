@@ -33,7 +33,7 @@ const app = express();
 // app.options('http://localhost:3001', cors());
 
 const corsOptions = {
-  origin: 'http://localhost:3001', // Specify your frontend origin
+  origin: process.env.ALLOW_ORIGIN, // Specify your frontend origin
   credentials: true, // This is important for cookies
 };
 
