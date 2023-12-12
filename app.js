@@ -7,10 +7,14 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const vehiclesRouter = require('./routes/vehicleRoutes');
+const userRouter = require('./routes/userRoutes');
+// const viewRouter = require('./routes/viewRoutes');
 // const tourRouter = require('./routes/tourRoutes');
 // const userRouter = require('./routes/userRoutes');
 // const reviewRouter = require('./routes/reviewRoutes');
@@ -20,6 +24,20 @@ const vehiclesRouter = require('./routes/vehicleRoutes');
 const app = express();
 
 // 1) GLOBAL MIDDLEWARES
+// Implement CORS
+// app.use(cors());
+
+// // handle complex requests (delete,put,patch) not handled by simple cors middleware by default
+// // (complex requests send an option request before performing the complex request)
+// // app.options('*', cors());
+// app.options('http://localhost:3001', cors());
+
+const corsOptions = {
+  origin: 'http://localhost:3001', // Specify your frontend origin
+  credentials: true, // This is important for cookies
+};
+
+app.use(cors(corsOptions));
 
 // Serving static files
 // app.use(express.static(`${__dirname}/public/`));
@@ -34,7 +52,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 // Limit requests from same API
 const limiter = rateLimit({
-  max: 100,
+  max: 1000,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour!',
 });
@@ -64,6 +82,7 @@ app.use(
     ],
   }),
 );
+app.use(compression());
 
 // Test middleware
 app.use((req, res, next) => {
@@ -73,7 +92,9 @@ app.use((req, res, next) => {
 
 // 3) ROUTES
 // app.use('/', viewRouter);
+// app.use('/', viewRouter);
 app.use('/api/v1/vehicles', vehiclesRouter);
+app.use('/api/v1/users', userRouter);
 
 // app.use('/api/v1/tours', tourRouter);
 // app.use('/api/v1/users', userRouter);

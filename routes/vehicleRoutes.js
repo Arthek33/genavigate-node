@@ -9,6 +9,8 @@ router
   .get(vehicleController.getAllVehicles)
   .post(vehicleController.createVehicle);
 
+router.route('/slug/:slug').get(vehicleController.getVehicleBySlug);
+
 router
   .route('/:id')
   .get(vehicleController.getVehicle)

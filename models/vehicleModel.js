@@ -9,8 +9,8 @@ const vehicleSchema = new mongoose.Schema(
       required: [true, 'A tour must have a name'],
       unique: true,
       trim: true,
-      maxlength: [40, 'A tour name must have less or equal than 40 characters'],
-      minlength: [10, 'A tour name must have more or equal than 40 characters'],
+      maxlength: [30, 'A tour name must have less or equal than 30 characters'],
+      minlength: [3, 'A tour name must have more or equal than 3 characters'],
       // validate: [validator.isAlpha, 'Tour name must only contains characters'],
     },
     slug: String,
@@ -45,7 +45,7 @@ const vehicleSchema = new mongoose.Schema(
       type: String,
       required: [true, 'A vehicle must have a cover image'],
     },
-    gitf: {
+    gltf: {
       type: String,
       // required: [true, 'A vehicle must have a gitf file'],
     },

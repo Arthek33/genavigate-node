@@ -46,8 +46,21 @@ exports.aliasTopVehicles = (req, res, next) => {
   next();
 };
 
+exports.getVehicleBySlug = catchAsync(async (req, res, next) => {
+  const vehicle = await Vehicle.findOne({ slug: req.params.slug });
+
+  if (!vehicle) {
+    next(new AppError('This tour slug does not exists', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    vehicle,
+  });
+});
+
 exports.getAllVehicles = factory.getAll(Vehicle);
-exports.getVehicle = factory.getOne(Vehicle, { path: 'reviews' });
+exports.getVehicle = factory.getOne(Vehicle);
 exports.createVehicle = factory.createOne(Vehicle);
 exports.updateVehicle = factory.updateOne(Vehicle);
 exports.deleteVehicle = factory.deleteOne(Vehicle);
