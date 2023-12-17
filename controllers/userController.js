@@ -46,12 +46,12 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .jpeg({ quality: 90 })
     .toBuffer();
   // .toFile(`public/img/users/${req.file.filename}`);
-
-  req.file.url = await uploadToFTP(
-    processedImage,
-    req.file.filename,
-    'genavigate/img/users/',
-  );
+  await uploadToFTP(processedImage, req.file.filename, 'genavigate/img/users');
+  // req.file.url = await uploadToFTP(
+  //   processedImage,
+  //   req.file.filename,
+  //   'genavigate/img/users/',
+  // );
 
   next();
 });
