@@ -6,12 +6,18 @@ const vehicleSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'A tour must have a name'],
+      required: [true, 'A vehicle must have a name'],
       unique: true,
       trim: true,
-      maxlength: [30, 'A tour name must have less or equal than 30 characters'],
-      minlength: [3, 'A tour name must have more or equal than 3 characters'],
-      // validate: [validator.isAlpha, 'Tour name must only contains characters'],
+      maxlength: [
+        30,
+        'A vehicle name must have less or equal than 30 characters',
+      ],
+      minlength: [
+        3,
+        'A vehicle name must have more or equal than 3 characters',
+      ],
+      // validate: [validator.isAlpha, 'Vehicle name must only contains characters'],
     },
     slug: String,
     vehicleType: {

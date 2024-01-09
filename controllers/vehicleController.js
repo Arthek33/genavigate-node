@@ -50,7 +50,7 @@ exports.getVehicleBySlug = catchAsync(async (req, res, next) => {
   const vehicle = await Vehicle.findOne({ slug: req.params.slug });
 
   if (!vehicle) {
-    next(new AppError('This tour slug does not exists', 404));
+    next(new AppError('This vehicle slug does not exists', 404));
   }
 
   res.status(200).json({
@@ -65,8 +65,8 @@ exports.createVehicle = factory.createOne(Vehicle);
 exports.updateVehicle = factory.updateOne(Vehicle);
 exports.deleteVehicle = factory.deleteOne(Vehicle);
 
-// tours-within?distance=23,center=-40,45,unit=miles
-// tours-within/233/center/34.109783,-118.126088/unit/mi
+// vehicle-within?distance=23,center=-40,45,unit=miles
+// vehicle-within/233/center/34.109783,-118.126088/unit/mi
 exports.getVehiclesWithin = catchAsync(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
